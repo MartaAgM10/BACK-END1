@@ -1,6 +1,6 @@
 import express from "express";
-import ProductManager from "./managers/productManager.js";
-import CartManager from "./managers/cartManager.js";
+import ProductManager from "./productManager.js";
+import CartManager from "./cartManager.js";
 
 const app = express();
 app.use(express.json());

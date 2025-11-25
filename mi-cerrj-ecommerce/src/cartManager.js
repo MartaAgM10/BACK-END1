@@ -6,13 +6,13 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const fs = require("fs").promises;
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+//const fs = require("fs").promises;
+//const path = require("path");
+//const { v4: uuidv4 } = require("uuid");
 
 class CartManager {
   constructor() {
-    this.path = path.join(__dirname, "../data/carts.json");
+    this.path = path.join(__dirname, "carts.json");
   }
 
   async _readFile() {

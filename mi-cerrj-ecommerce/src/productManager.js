@@ -6,13 +6,13 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const fs = require("fs").promises;
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+//const fs = require("fs").promises;
+//const path = require("path");
+//const { v4: uuidv4 } = require("uuid");
 
 class ProductManager {
   constructor() {
-    this.path = path.join(__dirname, "../data/products.json");
+    this.path = path.join(__dirname, "products.json");
   }
 
   async _readFile() {
@@ -28,11 +28,11 @@ class ProductManager {
     await fs.writeFile(this.path, JSON.stringify(data, null, 2));
   }
 
-  async getAll() {
+  async getProducts() {
     return await this._readFile();
   }
 
-  async getById(id) {
+  async getProductById(id) {
     const products = await this._readFile();
     return products.find((p) => p.id === id);
   }
