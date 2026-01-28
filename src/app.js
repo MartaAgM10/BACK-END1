@@ -7,7 +7,6 @@ import productsRouter from "./routes/products.router.js";
 
 const app = express();
 const PORT = 8080;
-app.use("/api/carts", cartsRouter);
 
 //const productManager = new ProductManager();
 
@@ -17,7 +16,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./src/public"));
 
 // Handlebars
-app.engine("handlebars", handlebars.engine());
+//app.engine("handlebars", handlebars.engine());
+app.engine(
+  "handlebars",
+  handlebars.engine({
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+    },
+  }),
+);
+
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 

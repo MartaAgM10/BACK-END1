@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { ProductModel } from "../models/Product.model.js";
+
 //paginacion, filtros y ordenamientos
 const router = Router();
+
 //GET /products?limit=&page=&sort=&query=
 router.get("/", async (req, res) => {
   try {
@@ -50,5 +52,53 @@ router.get("/", async (req, res) => {
     });
   }
 });
+// POST /api/products -> crear producto
+router.post("/", async (req, res) => {
+  try {
+    const product = req.body;
 
+    if (!product.title || !product.price) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Faltan campos obligatorios" });
+    }
+
+    const nuevoProducto = await ProductModel.create(product);
+
+    res.status(201).json({
+      status: "success",
+      payload: nuevoProducto,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      error: error.message,
+    });
+  }
+});
+
+// DELETE /api/products/:pid -> eliminar producto
+router.delete("/:pid", async (req, res) => {
+  try {
+    const { pid } = req.params;
+
+    const productoEliminado = await ProductModel.findByIdAndDelete(pid);
+
+    if (!productoEliminado) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Producto no encontrado" });
+    }
+
+    res.json({
+      status: "success",
+      message: "Producto eliminado correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      error: error.message,
+    });
+  }
+});
 export default router;

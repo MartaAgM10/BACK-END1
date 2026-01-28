@@ -88,7 +88,13 @@ router.put("/:cid/products/:pid", async (req, res) => {
 router.put("/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-    const { products } = req.body;
+    const { products } = req.body || {};
+    if (!Array.isArray(products)) {
+      return res.status(400).json({
+        status: "error",
+        message: "Debe enviar un array de productos",
+      });
+    }
     const cart = await CartModel.findById(cid);
     if (!cart)
       return res
